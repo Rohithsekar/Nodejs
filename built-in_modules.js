@@ -163,13 +163,79 @@ console.log(os);
 // console.log(os.platform(), os.homedir());
 //outputs linux /home/rohi when run in wsl terminal
 
+//this method is asynchronous(non-blocking)
 const fs = require('fs'); //fs stands for file system
 
 //reading files
-fs.readFile('./Text/Hello.txt', (err, data)=>{
-    if(err){
-        console.log(err);
-    }
-    console.log(data.toString());
+//it takes some time to read files and do stuff. In the meanwhile,
+//javascript executes the remaining lines of code
+// fs.readFile('./Text/Hello.txt', (err, data)=>{
+//     if(err){
+//         console.log(err);
+//     }
+//     console.log(data.toString());
 
-})
+// })
+
+// console.log(`last line`);
+
+
+//the writefile takes three arguments:
+//The relative path to the file with respect to the current directory
+//The stuff we want to write
+//A callback function
+
+
+// fs.writeFile('./Text/Hello.txt', "Hello, world!", ()=>{
+//   console.log(`file was written`);
+// })
+
+// //If we specify a file that doesn't exist, the method will create that file
+// fs.writeFile('./Text/Hello2.txt', "Hello, Rohi!", ()=>{
+//   console.log(`file was written in Hello2`);
+// })
+
+
+//directories
+
+//create or remove a directory in the current working directory
+//Again this is an asynchronous method,and we want a callback function
+//to fire when it gets its work done.
+
+//before we proceed to create/remove a directory, we make sure it doesn't/does already
+//exist with the help of existsSync function which is blocking(synchronous)
+//function.Although the function is synchronous, it is pretty quick.
+
+// if(!fs.existsSync('./assets')){
+//   fs.mkdir('./assets', (err)=>{
+//     if(err){
+//       console.log(err);
+//     }
+//     console.log("directory created");
+//     });
+// }
+// else {
+//   fs.rmdir('./assets', (err)=>{
+//     if(err){
+//       console.log(err);
+//     }
+//     else{
+//       console.log('folder deleted');
+//     }
+
+//   })
+// }
+
+/* If we again try to execute the mkdir fucntion , it throws
+an error object to the console */
+
+
+//deleting files
+if(fs.existsSync('./Text/deleteme.txt')){
+  fs.unlink('./Text/deleteme.txt', (err)=>{
+    if(err){
+      console.log(err)
+    }
+    console.log('file deleted');
+  })
+}
